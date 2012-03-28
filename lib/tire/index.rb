@@ -82,7 +82,7 @@ module Tire
       count = 0
 
       begin
-        response = Configuration.client.post("#{Configuration.url}/_bulk", payload.join("\n"))
+        response = Configuration.client.post(bulk_import_url, payload.join("\n"))
         raise RuntimeError, "#{response.code} > #{response.body}" if response.failure?
         response
       rescue StandardError => error
@@ -95,7 +95,7 @@ module Tire
         end
 
       ensure
-        curl = %Q|curl -X POST "#{Configuration.url}/_bulk" -d '{... data omitted ...}'|
+        curl = %Q|curl -X POST "#{bulk_import_url}" -d '{... data omitted ...}'|
         logged('BULK', curl)
       end
     end
@@ -299,6 +299,12 @@ module Tire
         when document.respond_to?(:to_indexed_json) then document.to_indexed_json
         else raise ArgumentError, "Please pass a JSON string or object with a 'to_indexed_json' method"
       end
+    end
+
+    def bulk_import_url
+      url = Configuration.url
+      url += "/#{Configuration.global_index_name}" if Configuration.global_index_name
+      url + "/_bulk"
     end
 
   end
