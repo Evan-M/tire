@@ -44,7 +44,7 @@ namespace :tire do
     klass  = eval(ENV['CLASS'].to_s)
     params = eval(ENV['PARAMS'].to_s) || {}
 
-    index = Tire::Index.new( ENV['INDEX'] || klass.tire.index.name )
+    index = Tire::Index.new( ENV['INDEX'] || Tire::Configuration.global_index_name || klass.tire.index.name )
 
     if ENV['FORCE']
       puts "[IMPORT] Deleting index '#{index.name}'"
