@@ -295,7 +295,7 @@ If configuring the search payload with blocks feels somehow too weak for you, yo
 a plain old Ruby `Hash` (or JSON string) with the query declaration to the `search` method:
 
 ```ruby
-    Tire.search 'articles', :query => { :fuzzy => { :title => 'Sour' } }
+    Tire.search 'articles', :query => { :prefix => { :title => 'fou' } }
 ```
 
 If this sounds like a great idea to you, you are probably able to write your application

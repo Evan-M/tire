@@ -35,6 +35,7 @@ module Tire
           @index_name = name if name
           @index_name = block if block_given?
           @index_name = Tire::Configuration.global_index_name if Tire::Configuration.global_index_name
+          # TODO: Try to get index_name from ancestor classes
           @index_name || [index_prefix, klass.model_name.plural].compact.join('_')
         end
 
@@ -79,7 +80,7 @@ module Tire
         #
         def document_type name=nil
           @document_type = name if name
-          @document_type || klass.model_name.singular
+          @document_type || klass.model_name.underscore
         end
       end
 

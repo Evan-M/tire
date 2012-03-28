@@ -530,18 +530,10 @@ module Tire
             @model = ActiveModelArticle.new 'id' => 1, 'title' => 'Test'
             assert_nil MultiJson.decode(@model.to_indexed_json)[:id]
             assert_nil MultiJson.decode(@model.to_indexed_json)['id']
-
-            @model = SupermodelArticle.new 'id' => 1, 'title' => 'Test'
-            assert_nil MultiJson.decode(@model.to_indexed_json)[:id]
-            assert_nil MultiJson.decode(@model.to_indexed_json)['id']
           end
 
           should "not include the type property in serialized document (_source)" do
             @model = ActiveModelArticle.new 'type' => 'foo', 'title' => 'Test'
-            assert_nil MultiJson.decode(@model.to_indexed_json)[:type]
-            assert_nil MultiJson.decode(@model.to_indexed_json)['type']
-
-            @model = SupermodelArticle.new 'type' => 'foo', 'title' => 'Test'
             assert_nil MultiJson.decode(@model.to_indexed_json)[:type]
             assert_nil MultiJson.decode(@model.to_indexed_json)['type']
           end
@@ -603,7 +595,7 @@ module Tire
             assert_equal( {:one => 1}.to_json, model.to_indexed_json )
 
           end
-          
+
           should "serialize mapped properties when mapping procs are set" do
             class ::ModelWithMappingProcs
               extend  ActiveModel::Naming
